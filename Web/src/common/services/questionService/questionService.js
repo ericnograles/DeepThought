@@ -33,7 +33,7 @@ angular.module('deepThought.services.question',
                 });
 
 
-            return deferred.promise();
+            return deferred.promise;
         };
 
         /**
@@ -56,7 +56,7 @@ angular.module('deepThought.services.question',
                     deferred.reject('Oh noes!');
                 });
 
-            return deferred.promise();
+            return deferred.promise;
         };
 
         return {
