@@ -1,7 +1,8 @@
 angular.module('deepThought.home', [
     'ui.router',
     'deepThought.constants',
-    'toaster'
+    'toaster',
+    'btford.socket-io'
 ])
     .config(function($stateProvider, STATES) {
         $stateProvider
@@ -25,7 +26,7 @@ angular.module('deepThought.home', [
             });
     })
 
-    .controller('SearchCtrl', function($scope, $http, $log, questionService, questions) {
+    .controller('SearchCtrl', function($scope, $http, $log, socketFactory, questionService, questions) {
         $log.info('SearchCtrl');
         $scope.searchText = null;
         $scope.searchResult = null;
@@ -34,8 +35,14 @@ angular.module('deepThought.home', [
         // Socket.io Subscriber
         try {
             var sockets = io.connect('http://localhost:1337/');
-            sockets.on('question:created', function (question) {
-                $scope.questions.push({ text: question.text, date: question.date });
+            sockets.on('question:created', function(question) {
+                var matchingQuestion = _.find($scope.questions, function(existingQuestion){
+                    return existingQuestion.text === question.text;
+                });
+                if (_.isUndefined(matchingQuestion)) {
+                    $scope.questions.push(question);
+                    $scope.$apply();
+                }
             });
         }
         catch (err){
@@ -48,7 +55,12 @@ angular.module('deepThought.home', [
         $scope.askDeepThought = function() {
             questionService.askQuestion($scope.searchText).then(function(question){
                 $scope.deepThoughtResponse = $scope.searchText +  ' I\'ll have to give that some thought. Come back later.';
-                $scope.questions.push({ text: question.text, date: question.date });
+                var matchingQuestion = _.find($scope.questions, function(existingQuestion){
+                    return existingQuestion.text === question.text;
+                });
+                if (_.isUndefined(matchingQuestion)) {
+                    $scope.questions.push({ text: question.text, createdAt: question.createdAt });
+                }
             },
             function(err){
                 $scope.deepThoughtResponse = 'Error accessing Deep Thought. Come back later.';
