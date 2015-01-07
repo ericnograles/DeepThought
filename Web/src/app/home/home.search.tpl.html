@@ -1,0 +1,22 @@
+<div class="container">
+    <div class="row">
+        <div class="form-inline">
+            <form ng-submit="askDeepThought()" class="form-inline">
+                <input type="text" class="form-control" placeholder="Yes, what do you want?" style="width: 93%;" ng-model="searchText" />
+                <input type="submit" class="btn btn-primary" value="Ask" />
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <br/>
+    </div>
+    <div class="row" style="background: white; color: red; font-weight: bolder; opacity: 0.75" ng-if="deepThoughtResponse !== null">
+        {{ deepThoughtResponse }}
+    </div>
+    <div class="row">
+        <br/>
+    </div>
+    <div ng-repeat="question in questions" class="row" style="background: white; color: blue; font-weight: bolder; opacity: 0.75" ng-if="questions.length > 0">
+        {{ question.text }}
+    </div>
+</div>

@@ -1,0 +1,31 @@
+<!-- Full Page Image Header Area -->
+<div id="top" class="header">
+    <div class="vert-text">
+        <a href="#answers" class="btn btn-primary btn-lg">I Want Answers</a>
+    </div>
+</div>
+<!-- /Full Page Image Header Area -->
+
+<!-- Intro -->
+<div id="answers" class="answers" ui-view="search">
+</div>
+<!-- /Intro -->
+
+<!-- Custom JavaScript for the Side Menu and Smooth Scrolling -->
+<script>
+    $(function() {
+        $('a[href*=#]:not([href=#])').click(function() {
+            if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') || location.hostname == this.hostname) {
+
+                var target = $(this.hash);
+                target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+                if (target.length) {
+                    $('html,body').animate({
+                        scrollTop: target.offset().top
+                    }, 1000);
+                    return false;
+                }
+            }
+        });
+    });
+</script>
