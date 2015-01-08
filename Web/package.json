@@ -1,16 +1,7 @@
 {
     "author": "Eric Nograles",
-    "name": "AgileMovieDB",
+    "name": "DeepThought",
     "version": "0.1.0",
-    "licenses": {
-        "type": "MIT",
-        "url": "https://raw.github.com/joshdmiller/ng-boilerplate/master/LICENSE"
-    },
-    "bugs": "https://github.com/joshdmiller/ng-boilerplate/issues",
-    "repository": {
-        "type": "git",
-        "url": "git@github.com:ericnograles/agilemoviedb.git"
-    },
     "dependencies": {
         "connect": "~2.12.0"
     },
