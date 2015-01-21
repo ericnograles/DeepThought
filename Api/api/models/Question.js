@@ -10,6 +10,7 @@ module.exports = {
   attributes: {
 
   },
+
   afterCreate: function(newRecord, next) {
     sails.io.sockets.emit('question:created', newRecord);
     next();

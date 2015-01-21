@@ -6,6 +6,10 @@
  */
 
 module.exports = {
-	
+
+  protectedQuestion: function(req, res) {
+    return res.json({ message: 'This is a protected question'});
+  }
+
 };
 
