@@ -1,13 +1,13 @@
 var Q = require('q'),
-    async = require('async'),
-    cache_manager = require('cache-manager'),
-    redis_store = require('../cache/redis_store'),
-    redis_connection = require('../../config/connections').connections.redisApplicationCache,
-    ttl = 100,
-    redis_cache = cache_manager.caching({ store: redis_store.create(redis_connection), db: 2, ttl: ttl });
+  async = require('async'),
+  cache_manager = require('cache-manager'),
+  redis_store = require('./redis_store'),
+  redis_connection = require('../../config/connections').connections.redisApplicationCache,
+  ttl = 100,
+  redis_cache = cache_manager.caching({ store: redis_store.create(redis_connection), db: 2, ttl: ttl });
 
 /**
- * The CacheService serves as the front-end for caching of any objects using redis
+ * The ApplicationCache serves as a cross-cutting concern
  * @type {{}}
  */
 module.exports = {
@@ -42,7 +42,7 @@ module.exports = {
    */
   setObject: function(key, model, object) {
     var deferred = Q.defer();
-    redis_cache.set(key, JSON.stringify(object), ttl, function(err) {
+    redis_cache.set(model.adapter.collection + '_' + key, object, ttl, function(err) {
       if (err) {
         deferred.reject(err);
       } else {

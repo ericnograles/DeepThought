@@ -7,8 +7,17 @@
 
 module.exports = {
 
-  protectedQuestion: function(req, res) {
-    return res.json({ message: 'This is a protected question'});
+  /**
+   * Overrides the default findOne blueprint to use caching
+   * @param req
+   * @param res
+   */
+  findOne: function(req, res) {
+    QuestionService.findOne(req.params.id).done(function(question) {
+      return res.json(question);
+    }, function(err) {
+      return res.serverError(err);
+    });
   }
 
 };

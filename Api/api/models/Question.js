@@ -1,3 +1,4 @@
+var ApplicationCache = require('../cache/ApplicationCache.js');
 /**
 * Question.js
 *
@@ -7,13 +8,26 @@
 
 module.exports = {
 
+  tableName: 'Question',
   attributes: {
 
   },
 
   afterCreate: function(newRecord, next) {
-    sails.io.sockets.emit('question:created', newRecord);
-    next();
+    ApplicationCache.setObject(newRecord.id, Question, newRecord).done(function(cachedObject) {
+      sails.io.sockets.emit('question:created', newRecord);
+      next();
+    },function(err) {
+      next();
+    });
+  },
+
+  afterUpdate: function(updatedRecord, next) {
+    ApplicationCache.setObject(updatedRecord.id, Question, updatedRecord).done(function(cachedObject) {
+      next();
+    },function(err) {
+      next();
+    });
   }
 };
 
