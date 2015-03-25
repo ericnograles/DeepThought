@@ -3,22 +3,23 @@ var async = require('async'),
     _ = require('lodash'),
     Sails = require('sails'),
     QuestionService = require('../../api/services/QuestionService'),
+    TestHelper = require('../helpers/TestHelper'),
     sails;
 
-describe('QuestionService', function() {
+describe('Question Service', function() {
 
+  // Scaffold all supporting objects
     before(function(done) {
-      // Scaffold all supporting objects
       async.waterfall([
         function scaffoldSails(callback) {
-          Sails.lift({
-            models: {
-              connection: 'localDiskDb'
-            }
-          }, function(err, server) {
-            sails = server;
-            callback(err);
-          })
+          TestHelper
+            .scaffoldSails()
+            .then(function(sailsServer) {
+              sails = sailsServer;
+              done();
+            }, function(error) {
+              callback(error);
+            })
         },
         function createSampleQuestion(callback) {
           Question
@@ -30,7 +31,7 @@ describe('QuestionService', function() {
               callback(err);
             });
         }
-      ], function(err) {
+      ], function finalizeScaffolding(err) {
         done(err);
       });
     });
@@ -47,6 +48,7 @@ describe('QuestionService', function() {
       });
   });
 
+  // Teardown all supporting objects
   after(function(done) {
     async.waterfall([
       function destroyQuestions(callback) {
@@ -55,9 +57,15 @@ describe('QuestionService', function() {
         });
       },
       function lowerSails(callback) {
-        sails.lower(callback);
+        TestHelper
+          .teardownSails(sails)
+          .then(function() {
+            callback();
+          }, function(error) {
+            done(callback(error));
+          })
       }
-    ], function(err) {
+    ], function finalizeTeardown (err) {
       done(err);
     });
   });
