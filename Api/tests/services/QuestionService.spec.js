@@ -6,6 +6,7 @@ var async = require('async'),
     ApplicationCache = require('../mocks/MockApplicationCache'),
     Sails = require('sails'),
     TestHelper = require('../helpers/TestHelper'),
+    QuestionRepository,
     QuestionService,
     sails;
 
@@ -26,8 +27,9 @@ describe('Question Service', function() {
               callback(error);
             });
         },
-        function mockApplicationCache(callback) {
-          QuestionService = proxyquire('../../api/services/QuestionService', { '../cache/ApplicationCache': ApplicationCache });
+        function mocks(callback) {
+          QuestionRepository = proxyquire('../../api/repositories/QuestionRepository', { '../cache/ApplicationCache': ApplicationCache });
+          QuestionService = proxyquire('../../api/services/QuestionService', { '../repositories/QuestionRepository': QuestionRepository });
           callback()
         },
         function createSampleQuestion(callback) {
@@ -48,7 +50,7 @@ describe('Question Service', function() {
 
   it('should find a specific Question', function(done) {
     QuestionService
-      .findOne(mockQuestionId)
+      .findById(mockQuestionId)
       .done(function(question) {
         assert(!_.isUndefined(question));
         assert(question.id === mockQuestionId);

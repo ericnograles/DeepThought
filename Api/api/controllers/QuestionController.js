@@ -13,7 +13,7 @@ module.exports = {
    * @param res
    */
   findOne: function(req, res) {
-    QuestionService.findOne(req.params.id).done(function(question) {
+    QuestionService.findById(req.params.id).done(function(question) {
       return res.json(question);
     }, function(err) {
       return res.serverError(err);
