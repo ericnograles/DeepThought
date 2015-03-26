@@ -30,6 +30,7 @@
     "redis": "^0.12.1",
     "sails": "~0.10.5",
     "sails-disk": "~0.10.0",
+    "sails-mongo": "^0.10.5",
     "sol-redis-pool": "^0.2.0"
   },
   "scripts": {
