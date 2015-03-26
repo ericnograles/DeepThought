@@ -60,6 +60,17 @@ describe('Question Service', function() {
       })
   });
 
+  it('should find weather', function(done) {
+    QuestionService
+      .findWeather('Orlando, FL')
+      .done(function(weather) {
+        assert(!_.isUndefined(weather));
+        done();
+      }, function(error) {
+        done(error);
+      })
+  });
+
   // Teardown all supporting objects
   after(function(done) {
     async.waterfall([
