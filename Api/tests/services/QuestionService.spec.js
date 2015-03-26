@@ -24,7 +24,7 @@ describe('Question Service', function() {
               callback();
             }, function(error) {
               callback(error);
-            })
+            });
         },
         function mockApplicationCache(callback) {
           QuestionService = proxyquire('../../api/services/QuestionService', { '../cache/ApplicationCache': ApplicationCache });
