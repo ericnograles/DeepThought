@@ -1,5 +1,4 @@
 var Q = require('q'),
-    ApplicationCache = require('../cache/ApplicationCache'),
     QuestionRepository = require('../repositories/QuestionRepository'),
     WeatherIntegration = require('../integrations/WeatherIntegration'),
     QuestionDTO = require('../dto/QuestionDTO'),

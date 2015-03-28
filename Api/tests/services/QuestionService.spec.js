@@ -8,6 +8,7 @@ var async = require('async'),
     TestHelper = require('../helpers/TestHelper'),
     QuestionRepository,
     QuestionService,
+    WeatherIntegration,
     sails;
 
 describe('Question Service', function() {
@@ -28,8 +29,25 @@ describe('Question Service', function() {
             });
         },
         function mocks(callback) {
+          WeatherIntegration = {
+            findWeatherBySearchString: function(searchString) {
+              var deferred = Q.defer();
+              var mockWeatherData = require('../mocks/data/Weather.json');
+              deferred.resolve(mockWeatherData);
+              return deferred.promise;
+            }
+          };
+
+          // Mock the Cache
           QuestionRepository = proxyquire('../../api/repositories/QuestionRepository', { '../cache/ApplicationCache': ApplicationCache });
-          QuestionService = proxyquire('../../api/services/QuestionService', { '../repositories/QuestionRepository': QuestionRepository });
+
+          // Mock the WeatherIntegration
+          QuestionService = proxyquire('../../api/services/QuestionService',
+            {
+              '../repositories/QuestionRepository': QuestionRepository,
+              '../integrations/WeatherIntegration': WeatherIntegration
+            }
+          );
           callback()
         },
         function createSampleQuestion(callback) {
