@@ -1,0 +1,42 @@
+{
+  "coord": {
+    "lon": -81.38,
+    "lat": 28.54
+  },
+  "sys": {
+    "type": 3,
+    "id": 56622,
+    "message": 0.0128,
+    "country": "United States of America",
+    "sunrise": 1427541568,
+    "sunset": 1427586085
+  },
+  "weather": [
+    {
+      "id": 800,
+      "main": "Clear",
+      "description": "Sky is Clear",
+      "icon": "01d"
+    }
+  ],
+  "base": "stations",
+  "main": {
+    "temp": 284.48,
+    "humidity": 63,
+    "pressure": 1015,
+    "temp_min": 283.15,
+    "temp_max": 285.93
+  },
+  "wind": {
+    "speed": 0.51,
+    "gust": 4.11,
+    "deg": 324
+  },
+  "rain": {"3h": 0},
+  "clouds": {"all": 0},
+  "dt": 1427546711,
+  "id": 4167147,
+  "name": "Orlando",
+  "cod": 200,
+  "origin": "DTO"
+}
