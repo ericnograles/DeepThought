@@ -4,6 +4,12 @@ var _ = require('lodash'),
   QuestionObject = require('../domain/Question');
 
 module.exports = {
+
+  /**
+   * Finds a question by id
+   * @param id
+   * @returns {Question}
+   */
   findById: function(id) {
     var deferred = Q.defer();
 

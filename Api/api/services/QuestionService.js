@@ -9,6 +9,12 @@ var Q = require('q'),
  * @type {{findOne: Function}}
  */
 module.exports = {
+
+  /**
+   * Finds a question by id
+   * @param id
+   * @returns {*}
+   */
   findById: function(id) {
     var deferred = Q.defer();
 
@@ -26,6 +32,11 @@ module.exports = {
     return deferred.promise;
   },
 
+  /**
+   * Finds weather via WeatherIntegration
+   * @param searchString
+   * @returns {*}
+   */
   findWeather: function(searchString) {
     var deferred = Q.defer();
 
